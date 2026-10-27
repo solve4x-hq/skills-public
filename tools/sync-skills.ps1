@@ -61,12 +61,13 @@ function Get-LinkTarget($path) { [string](Get-Item -LiteralPath $path -Force).Ta
 function Test-Managed($target) { foreach ($s in $Sources) { if ($target -like "$s\*") { return $true } } $false }
 
 # 1. Pull.
+$pullFailed = $false
 if ($Pull) {
   foreach ($s in $Sources) {
     $repo = (git -C $s rev-parse --show-toplevel 2>$null)
     if ($repo) {
       git -C $repo pull -q --ff-only 2>&1 | Out-Null
-      if ($LASTEXITCODE) { Write-Warning "pull failed in $repo (local changes or diverged); linked what's there" } else { "pulled   $repo" }
+      if ($LASTEXITCODE) { $pullFailed = $true; Write-Warning "pull failed in $repo (local changes or diverged); linked what's there" } else { "pulled   $repo" }
     }
   }
 }
@@ -150,3 +151,4 @@ if ($Schedule) {
   "scheduled 'Sync AI skills' at sign-in and every $EveryHours h"
 }
 "done: $($skills.Count) skills in $($Targets.Count) tool folders$(if ($Projects) { ", $($Projects.Count) projects" })"
+if ($pullFailed) { exit 1 }
