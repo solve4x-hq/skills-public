@@ -235,7 +235,7 @@ try {
     if ($LASTEXITCODE) { $protected = $false; if ($out -match 'Upgrade to GitHub Pro') { break } else { Write-Warning "protecting ${b}: $out" } }
   }
   if ($protected) { 'protected main and dev (pull requests required for others; no force-push)' }
-  else { 'NOTE: branch protection needs GitHub Pro for private repos on a free account. Until then, outside AI tools should get read-only access.' }
+  else { 'NOTE: branch protection could not be enabled. Check repository permissions and the GitHub plan; private organization repositories may require GitHub Team. Until protection is available, outside AI tools should get read-only access.' }
 } finally { Pop-Location }
 
 # ── Register with your AGENTS.md and skills sync ─────────────────────────
