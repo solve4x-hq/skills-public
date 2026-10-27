@@ -9,7 +9,7 @@ These are the skills from [Solve4x](https://solve4x.ai) that are generic enough 
 ## ⚡ Quick start
 
 ```bash
-git clone https://github.com/Solve4x-ai/skills-public.git
+git clone https://github.com/solve4x-hq/skills-public.git
 ```
 
 Then link the skills into every AI coding tool you use, in one go (Windows PowerShell, no admin needed):
