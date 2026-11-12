@@ -141,7 +141,9 @@ if ($Schedule) {
   if ($ProjectsFile) { $argList += @('-ProjectsFile', (& $quote (Resolve-Path $ProjectsFile).Path)) }
   elseif ($Projects) { $argList += @('-Projects', (($Projects | ForEach-Object { & $quote $_ }) -join ',')) }
   $shell = (Get-Command pwsh -ErrorAction SilentlyContinue)?.Source ?? (Get-Command powershell).Source
-  $action = New-ScheduledTaskAction -Execute $shell -Argument ($argList -join ' ')
+  # conhost --headless: Windows 11's default terminal ignores -WindowStyle Hidden, so the sync flashed a window.
+  $conhost = Join-Path $env:WINDIR 'System32\conhost.exe'
+  $action = New-ScheduledTaskAction -Execute $conhost -Argument ("--headless $(& $quote $shell) " + ($argList -join ' '))
   $triggers = @(
     (New-ScheduledTaskTrigger -AtLogOn -User "$env:USERDOMAIN\$env:USERNAME"),
     (New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Hours $EveryHours))
