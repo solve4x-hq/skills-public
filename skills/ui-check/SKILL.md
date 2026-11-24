@@ -4,7 +4,7 @@ description: Use when a change touches anything a person sees in a web UI, befor
 visibility: public
 scope: personal
 layer: engineering
-last-verified: 2026-10-13
+last-verified: 2026-11-23
 ---
 # ui-check
 
@@ -25,6 +25,7 @@ Look at the real page, not the code, and catch what a person would trip over.
 - A passing test suite says nothing about layout. Only looking does.
 - Formatting and CSS changes can move things on pages you didn't edit; shoot the neighbours too.
 - Real data is messier than test data: try it against the busiest real account you're allowed to view.
+- Anything the person must type or paste somewhere else (a sign-in code, a one-time code, a value for another site) gets its own panel, set apart from the rest. It shows the value large, has one button that copies it and opens where it goes, and gives short steps that say what it is and what it isn't ("not your authenticator code"). Buried in a card's text, people type the wrong code.
 
 ## never
 - Never call UI work done without having looked at it.
